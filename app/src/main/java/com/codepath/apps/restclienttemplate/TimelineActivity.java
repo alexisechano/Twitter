@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.codepath.oauth.OAuthBaseClient;
 import com.facebook.stetho.common.ArrayListAccumulator;
 
 import org.json.JSONArray;
@@ -50,6 +52,8 @@ public class TimelineActivity extends AppCompatActivity {
         populateHomeTimeline();
     }
 
+
+
     private void populateHomeTimeline() {
         restClient.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
@@ -69,5 +73,10 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.e(TAG, "Fail!", throwable);
             }
         });
+    }
+
+    public void clickToLogout(View view) {
+        restClient.clearAccessToken(); // forget who's logged in
+        finish(); // navigate backwards to Login screen
     }
 }
