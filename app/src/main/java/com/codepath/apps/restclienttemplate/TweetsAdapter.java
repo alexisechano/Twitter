@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,6 +77,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvBody;
         TextView tvScreenName;
         TextView tvRelativeTime;
+        LinearLayout ivOuterLayout;
+        ImageView ivMedia;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -83,6 +86,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
+            ivOuterLayout = itemView.findViewById(R.id.ivOuterLayout);
+            ivMedia = itemView.findViewById(R.id.ivMedia);
         }
 
         public void bind(Tweet tweet) {
@@ -94,6 +99,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvRelativeTime.setText(relativeTime);
             tvScreenName.setText(tweet.user.screenName);
             Glide.with(context).load(tweet.user.imageUrl).into(ivProfileImage);
+
+            String mediaurl = tweet.mediaURL;
+            if(mediaurl != null){
+                // only show the image if the tweet has media
+                ivOuterLayout.setVisibility(View.VISIBLE);
+                Glide.with(context).load(mediaurl).into(ivMedia);
+            }
         }
 
         public String getRelativeTimeAgo(String rawJsonDate) {

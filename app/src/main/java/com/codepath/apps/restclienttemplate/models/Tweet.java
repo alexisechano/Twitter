@@ -14,6 +14,7 @@ public class Tweet {
     // variables for a Tweet
     public String body;
     public String createdAt;
+    public String mediaURL;
     public User user;
 
     // empty constructor for Parcel
@@ -26,6 +27,20 @@ public class Tweet {
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+
+        // get entities
+        JSONObject ents = jsonObject.getJSONObject("entities");
+        tweet.mediaURL = null;
+
+        if(ents.has("media")) {
+            // get media array and send to Media class
+            JSONArray mediaArray = ents.getJSONArray("media");
+
+            // null check for media
+            if (mediaArray != null) {
+                tweet.mediaURL = Media.fromJSONArray(mediaArray).imageUrl;
+            }
+        }
         return tweet;
     }
 
