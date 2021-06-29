@@ -2,12 +2,17 @@ package com.codepath.apps.restclienttemplate.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
+@Parcel
 public class User {
     // attritbutes for user
     public String name;
     public String screenName;
     public String imageUrl;
+
+    // empty constructor for Parcel
+    public User(){}
 
     public static User fromJSON(JSONObject jsonObject) throws JSONException {
         User user = new User();
