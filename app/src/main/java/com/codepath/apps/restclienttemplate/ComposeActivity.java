@@ -20,7 +20,7 @@ import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
     // constants
-    public static final int MAX_TWEET_LENGTH = 140;
+    public static final int MAX_TWEET_LENGTH = 280; // updated from 140
     public static final String TAG = "ComposeActivity";
 
     // UI elements
