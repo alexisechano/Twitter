@@ -48,9 +48,6 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-        // call rest client method
-        restClient = TwitterApp.getRestClient(this);
-
         // init list of tweets and adapter
         tweets = new ArrayList<>();
         adapter = new TweetsAdapter(this, tweets);
@@ -78,6 +75,9 @@ public class TimelineActivity extends AppCompatActivity {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+        // call rest client method
+        restClient = TwitterApp.getRestClient(this);
 
         // fill up home timeline screen
         populateHomeTimeline();
@@ -131,6 +131,8 @@ public class TimelineActivity extends AppCompatActivity {
         // switch case to naviagte menu items
         switch (item.getItemId()) {
             case R.id.profile:
+                return true;
+            case R.id.logout:
                 // to logout of twitter clone
                 clickToLogout(rvTweets);
                 return true;
