@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Text;
@@ -72,6 +73,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
     // define a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder{
+        // constants
+        public final int IMG_RADIUS = 80;
+        public final int IMG_MARGIN = 0;
 
         // variables
         ImageView ivProfileImage;
@@ -102,7 +106,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
             tvRelativeTime.setText(relativeTime);
             tvScreenName.setText(tweet.user.screenName);
-            Glide.with(context).load(tweet.user.imageUrl).into(ivProfileImage);
+            Glide.with(context).load(tweet.user.imageUrl).centerInside()
+                    .fitCenter()
+                    .transform(new RoundedCornersTransformation(IMG_RADIUS, IMG_MARGIN)).into(ivProfileImage);
 
             // init media url variable
             String mediaUrl = tweet.mediaURL;
