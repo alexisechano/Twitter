@@ -48,15 +48,28 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
+        // call rest client method
+        restClient = TwitterApp.getRestClient(this);
+
+        // init list of tweets and adapter
+        tweets = new ArrayList<>();
+        adapter = new TweetsAdapter(this, tweets);
+
+        // find recycler view
+        rvTweets = findViewById(R.id.rvTweets);
+
+        // recycler view adapter setup
+        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        rvTweets.setAdapter(adapter);
+
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
+                // refresh the list here
                 fetchTimelineAsync(0);
             }
         });
@@ -66,27 +79,12 @@ public class TimelineActivity extends AppCompatActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        // Call method
-        restClient = TwitterApp.getRestClient(this);
-
-        // find recycler view
-        rvTweets = findViewById(R.id.rvTweets);
-
-        // init list of tweets and adapter
-        tweets = new ArrayList<>();
-        adapter = new TweetsAdapter(this, tweets);
-
-        // recycler view setup
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
-        rvTweets.setAdapter(adapter);
-
+        // fill up home timeline screen
         populateHomeTimeline();
     }
 
     private void fetchTimelineAsync(int i) {
-        // Send the network request to fetch the updated data
-        // `client` here is an instance of Android Async HTTP
-        // getHomeTimeline is an example endpoint.
+        // send the network request to fetch the updated data
         restClient.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -134,7 +132,10 @@ public class TimelineActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ComposeActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
             return true;
-
+        }else if(item.getItemId() == R.id.profile){
+            // to logout of twitter clone
+            clickToLogout(rvTweets);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -145,8 +146,8 @@ public class TimelineActivity extends AppCompatActivity {
             // get data from the intent
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
             // update RV with this new tweet
-            // modify data source
             tweets.add(0, tweet);
+
             // update view after
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
@@ -176,7 +177,9 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public void clickToLogout(View view) {
-        restClient.clearAccessToken(); // forget who's logged in
-        finish(); // navigate backwards to Login screen
+        // forget who's logged in
+        restClient.clearAccessToken();
+        // navigate backwards to Login screen
+        finish();
     }
 }

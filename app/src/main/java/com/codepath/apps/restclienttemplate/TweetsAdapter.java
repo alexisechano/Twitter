@@ -25,10 +25,11 @@ import java.util.Locale;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
 
-    // define variables
+    // define global variables
     Context context;
     List<Tweet> tweets;
 
+    // adapter constructor
     public TweetsAdapter(Context context, List<Tweet> tweets){
         this.context = context;
         this.tweets = tweets;
@@ -80,6 +81,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         LinearLayout ivOuterLayout;
         ImageView ivMedia;
 
+        // attach all of the variables to respective XML elements
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
@@ -91,23 +93,31 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         }
 
         public void bind(Tweet tweet) {
+            // set Tweet body text
             tvBody.setText(tweet.body);
 
-            String pre_time = tweet.createdAt;
-            String relativeTime = getRelativeTimeAgo(pre_time);
+            // manipulate time to show relative
+            String preTime = tweet.createdAt;
+            String relativeTime = getRelativeTimeAgo(preTime);
 
             tvRelativeTime.setText(relativeTime);
             tvScreenName.setText(tweet.user.screenName);
             Glide.with(context).load(tweet.user.imageUrl).into(ivProfileImage);
 
-            String mediaurl = tweet.mediaURL;
-            if(mediaurl != null){
+            // init media url variable
+            String mediaUrl = tweet.mediaURL;
+
+            // clear image cache - no repeat photos (fixes bug)
+            ivMedia.setImageDrawable(null);
+
+            if(mediaUrl != null){
                 // only show the image if the tweet has media
                 ivOuterLayout.setVisibility(View.VISIBLE);
-                Glide.with(context).load(mediaurl).into(ivMedia);
+                Glide.with(context).load(mediaUrl).into(ivMedia);
             }
         }
 
+        // method to adjust time text to show time ago
         public String getRelativeTimeAgo(String rawJsonDate) {
             String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
             SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);

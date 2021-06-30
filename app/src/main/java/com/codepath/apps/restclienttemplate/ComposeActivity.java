@@ -33,11 +33,14 @@ public class ComposeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compose);
 
+        // initialize client for use in compose button
         client = TwitterApp.getRestClient(this);
 
-        // find the ids
+        // set activity information and connect to XML
+        setContentView(R.layout.activity_compose);
+
+        // find the ids for compose activity
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
 
@@ -53,15 +56,17 @@ public class ComposeActivity extends AppCompatActivity {
                     Toast.makeText(ComposeActivity.this, "Sorry, tweet is too long!", Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 // make an API call to it
                 Toast.makeText(ComposeActivity.this, "YOUR TWEET:" + tweetContent, Toast.LENGTH_LONG).show();
+
+                // use twitter client to publish tweet
                 client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         Log.i(TAG, "Posted tweet!");
                         try {
                             Tweet tweet = Tweet.fromJSON(json.jsonObject);
-                            Log.i(TAG, "Published tweet:" + tweet);
                             Intent intent = new Intent();
                             intent.putExtra("tweet", Parcels.wrap(tweet));
                             setResult(RESULT_OK, intent);
@@ -69,7 +74,6 @@ public class ComposeActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
 
                     @Override
@@ -77,11 +81,8 @@ public class ComposeActivity extends AppCompatActivity {
                         Log.e(TAG, "Failed to post tweet", throwable);
                     }
                 });
-
             }
         });
-
-
 
     }
 }

@@ -6,14 +6,15 @@ import org.parceler.Parcel;
 
 @Parcel
 public class User {
-    // attritbutes for user
+    // attributes for user - public for Parcel
     public String name;
     public String screenName;
     public String imageUrl;
 
     // empty constructor for Parcel
-    public User(){}
+    public User() {}
 
+    // method sets the User's attributes from given JSON Object
     public static User fromJSON(JSONObject jsonObject) throws JSONException {
         User user = new User();
         user.name = jsonObject.getString("name");

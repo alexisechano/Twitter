@@ -18,17 +18,16 @@ public class Tweet {
     public User user;
 
     // empty constructor for Parcel
-    public Tweet(){
+    public Tweet() {}
 
-    }
-
+    // method sets the Tweet's attributes from given JSON Object
     public static Tweet fromJSON(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
 
-        // get entities
+        // get entities (like for media or hashtags)
         JSONObject ents = jsonObject.getJSONObject("entities");
         tweet.mediaURL = null;
 
@@ -44,6 +43,7 @@ public class Tweet {
         return tweet;
     }
 
+    // method to extract information from JSON array and put into tweets array
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {
         List<Tweet> tweets = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++){
