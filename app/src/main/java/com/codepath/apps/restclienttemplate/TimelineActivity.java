@@ -114,6 +114,7 @@ public class TimelineActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Toast.makeText(TimelineActivity.this, "Timeline refresh failed", Toast.LENGTH_LONG).show();
                 Log.e("DEBUG", "Failed", throwable);
             }
         });
@@ -127,17 +128,20 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.compose){
-            // navigate to new activity
-            Intent intent = new Intent(this, ComposeActivity.class);
-            startActivityForResult(intent, REQUEST_CODE);
-            return true;
-        }else if(item.getItemId() == R.id.profile){
-            // to logout of twitter clone
-            clickToLogout(rvTweets);
-            return true;
+        // switch case to naviagte menu items
+        switch (item.getItemId()) {
+            case R.id.compose:
+                // navigate to new activity
+                Intent intent = new Intent(this, ComposeActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                return true;
+            case R.id.profile:
+                // to logout of twitter clone
+                clickToLogout(rvTweets);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -145,6 +149,7 @@ public class TimelineActivity extends AppCompatActivity {
         if(REQUEST_CODE == requestCode && resultCode == RESULT_OK){
             // get data from the intent
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
+
             // update RV with this new tweet
             tweets.add(0, tweet);
 
@@ -165,12 +170,14 @@ public class TimelineActivity extends AppCompatActivity {
                     tweets.addAll(Tweet.fromJsonArray(jsonArray));
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
+                    Toast.makeText(TimelineActivity.this, "Adding tweets to timeline failed", Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Json exception", e);
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Toast.makeText(TimelineActivity.this, "JSON Object retrieval failed", Toast.LENGTH_LONG).show();
                 Log.e(TAG, "Fail!", throwable);
             }
         });

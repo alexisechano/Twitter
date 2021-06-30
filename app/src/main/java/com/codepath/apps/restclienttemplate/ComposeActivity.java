@@ -72,12 +72,14 @@ public class ComposeActivity extends AppCompatActivity {
                             setResult(RESULT_OK, intent);
                             finish();
                         } catch (JSONException e) {
+                            Toast.makeText(ComposeActivity.this, "Opening new activity failed!", Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
                     }
 
                     @Override
                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                        Toast.makeText(ComposeActivity.this, "Publishing tweet failed!", Toast.LENGTH_LONG).show();
                         Log.e(TAG, "Failed to post tweet", throwable);
                     }
                 });
