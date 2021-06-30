@@ -130,11 +130,6 @@ public class TimelineActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // switch case to naviagte menu items
         switch (item.getItemId()) {
-            case R.id.compose:
-                // navigate to new activity
-                Intent intent = new Intent(this, ComposeActivity.class);
-                startActivityForResult(intent, REQUEST_CODE);
-                return true;
             case R.id.profile:
                 // to logout of twitter clone
                 clickToLogout(rvTweets);
@@ -189,4 +184,11 @@ public class TimelineActivity extends AppCompatActivity {
         // navigate backwards to Login screen
         finish();
     }
+
+    public void clickToCompose(View view) {
+        // navigate to new activity
+        Intent intent = new Intent(this, ComposeActivity.class);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
 }

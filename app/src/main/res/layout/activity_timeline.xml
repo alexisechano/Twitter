@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".TimelineActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/compose"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/twitter_blue"
+        android:layout_gravity="bottom|right"
+        app:srcCompat="@drawable/vector_compose_fab"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="clickToCompose"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeContainer"
@@ -19,6 +32,9 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp" >
         </androidx.recyclerview.widget.RecyclerView>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+
 </RelativeLayout>
+
