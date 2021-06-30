@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Movie;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import org.jetbrains.annotations.NotNull;
+import org.parceler.Parcels;
 import org.w3c.dom.Text;
 
 import java.text.ParseException;
@@ -46,7 +49,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
     // bind value based on pos
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // get the data
         Tweet tweet = tweets.get(position);
 
@@ -72,7 +75,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     // define a viewholder
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // constants
         public final int IMG_RADIUS = 80;
         public final int IMG_MARGIN = 0;
@@ -86,7 +89,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivMedia;
 
         // attach all of the variables to respective XML elements
-        public ViewHolder(@NonNull @NotNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvBody = itemView.findViewById(R.id.tvBody);
@@ -94,6 +97,27 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
             ivOuterLayout = itemView.findViewById(R.id.ivOuterLayout);
             ivMedia = itemView.findViewById(R.id.ivMedia);
+
+            // add this as the itemView's OnClickListener
+            itemView.setOnClickListener(this);
+        }
+
+        // when the user clicks on a row, show Tweet details
+        @Override
+        public void onClick(View v) {
+            // gets item position
+            int position = getAdapterPosition();
+            // make sure the position is valid, i.e. actually exists in the view
+            if (position != RecyclerView.NO_POSITION) {
+                // get the Tweet at the position, this won't work if the class is static
+                Tweet tweet = tweets.get(position);
+                // create intent for the new activity
+                Intent intent = new Intent(context, TweetDetails.class);
+                // serialize the tweet using parceler, use its short name as a key
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+                // show the activity
+                context.startActivity(intent);
+            }
         }
 
         public void bind(Tweet tweet) {
