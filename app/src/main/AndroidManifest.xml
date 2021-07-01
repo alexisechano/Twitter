@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity android:name=".TweetDetails" />
-        <activity android:name=".ComposeActivity" />
+        <activity android:name=".dead_code.ComposeActivity" />
         <activity android:name=".TimelineActivity" />
         <activity
             android:name=".LoginActivity"

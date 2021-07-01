@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ComposeActivity">
+    android:padding="20dp">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputCounter"
@@ -24,6 +24,7 @@
             android:layout_marginTop="5dp"
             android:ems="10"
             android:gravity="start|top"
+            android:imeOptions="actionDone"
             android:hint="@string/what_s_happening"
             android:inputType="textMultiLine"
             android:minLines="5" />
@@ -40,4 +41,5 @@
         android:background="@color/twitter_blue"
         android:textColor="@color/twt_white"
         android:text="@string/tweet" />
+
 </RelativeLayout>

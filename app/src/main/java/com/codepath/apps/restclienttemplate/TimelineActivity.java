@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -28,7 +29,7 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements EditFragmentDialog.EditNameDialogListener {
     // request code
     private final int REQUEST_CODE = 20;
 
@@ -42,6 +43,7 @@ public class TimelineActivity extends AppCompatActivity {
     TweetsAdapter adapter;
 
     public static final String TAG = "TimelineActivity";
+    public static final int MAX_TWEET_LENGTH = 280; // updated from 140
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,8 +191,50 @@ public class TimelineActivity extends AppCompatActivity {
 
     public void clickToCompose(View view) {
         // navigate to new activity
-        Intent intent = new Intent(this, ComposeActivity.class);
-        startActivityForResult(intent, REQUEST_CODE);
+        //Intent intent = new Intent(this, ComposeActivity.class);
+        //startActivityForResult(intent, REQUEST_CODE);
+        showEditDialog();
+    }
+
+    public void showEditDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        EditFragmentDialog editNameDialogFragment = EditFragmentDialog.newInstance();
+        editNameDialogFragment.show(fm, "fragment_edit_name");
+    }
+
+    @Override
+    public void onFinishEditDialog(String tweetContent) {
+        if(tweetContent.isEmpty()){
+            Toast.makeText(TimelineActivity.this, "Sorry, tweet cannot be empty!", Toast.LENGTH_LONG).show();
+            return;
+        } else if(tweetContent.length() > MAX_TWEET_LENGTH){
+            Toast.makeText(TimelineActivity.this, "Sorry, tweet is too long!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // use twitter client to publish tweet
+        restClient.publishTweet(tweetContent, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.i(TAG, "Posted tweet!");
+                try {
+                    Tweet tweet = Tweet.fromJSON(json.jsonObject);
+                    Intent intent = new Intent();
+                    intent.putExtra("tweet", Parcels.wrap(tweet));
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } catch (JSONException e) {
+                    Toast.makeText(TimelineActivity.this, "Opening new activity failed!", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Toast.makeText(TimelineActivity.this, "Publishing tweet failed!", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Failed to post tweet", throwable);
+            }
+        });
     }
 
 }
