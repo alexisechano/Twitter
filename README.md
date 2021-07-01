@@ -56,7 +56,7 @@ GIF created with [Kap](https://getkap.co/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I didn't have many challenges except the modal overlay and general understanding of each component of the app. I had to troubleshoot the composer activity and make it fit into the DialogFragment. I was able to follow the guides and read the official Android docs to clear any confusion on the modal and the general processes of the this Twitter clone!
 
 ## Open-source libraries used
 
