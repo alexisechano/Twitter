@@ -31,7 +31,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="This is a tweet" />
+        android:text="This is a tweet"
+        android:linksClickable="true"
+        android:autoLink="all"/>
 
     <LinearLayout
         android:id="@+id/ivOuterLayout"
@@ -40,8 +42,10 @@
         android:layout_below="@+id/tvBody"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_marginTop="8dp">
+        android:visibility="invisible"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        >
 
         <ImageView
             android:id="@+id/ivMedia"
@@ -61,5 +65,44 @@
         android:layout_marginEnd="10dp"
         android:layout_toEndOf="@+id/tvScreenName"
         android:text="Right Now" />
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_above="@id/ivOuterLayout"
+        android:layout_alignParentBottom = "true"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+
+        >
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="50dp"
+            android:backgroundTint="@color/twitter_blue"
+            android:src="@android:drawable/sym_action_chat" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="50dp"
+            android:backgroundTint="@color/twitter_blue"
+            android:src="@drawable/ic_vector_retweet_stroke" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:backgroundTint="@color/twitter_blue"
+            android:src="@drawable/ic_vector_heart_stroke"
+            android:layout_alignParentLeft="true"/>
+
+    </LinearLayout>-->
+
+
 
 </RelativeLayout>
