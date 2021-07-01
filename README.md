@@ -30,7 +30,7 @@ The following **optional** features are implemented:
 * [x] User can tap a tweet to **open a detailed tweet view**
   * [ ] User can **take favorite (and unfavorite) or retweet** actions on a tweet
 * [ ] User can view more tweets as they scroll with infinite pagination
-* [ ] Compose tweet functionality is built using modal overlay
+* [x] Compose tweet functionality is built using modal overlay
 * [x] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
 * [ ] Replace all icon drawables and other static image assets with [vector drawables](http://guides.codepath.org/android/Drawables#vector-drawables) where appropriate.
 * [ ] User can view following / followers list through any profile they view.
@@ -46,7 +46,11 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+Basic scrolling and logout:
+<img src='walkthrough1' title='Video Walkthrough 1' width='' alt='Video Walkthrough 1' />
+
+Compose and linked tweet:
+<img src='walkthrough2' title='Video Walkthrough 2' width='' alt='Video Walkthrough 2' />
 
 GIF created with [Kap](https://getkap.co/).
 
