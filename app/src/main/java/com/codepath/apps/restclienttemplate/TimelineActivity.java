@@ -191,8 +191,6 @@ public class TimelineActivity extends AppCompatActivity implements EditFragmentD
 
     public void clickToCompose(View view) {
         // navigate to new activity
-        //Intent intent = new Intent(this, ComposeActivity.class);
-        //startActivityForResult(intent, REQUEST_CODE);
         showEditDialog();
     }
 
@@ -219,9 +217,13 @@ public class TimelineActivity extends AppCompatActivity implements EditFragmentD
                 Log.i(TAG, "Posted tweet!");
                 try {
                     Tweet tweet = Tweet.fromJSON(json.jsonObject);
-                    Intent intent = new Intent();
-                    intent.putExtra("tweet", Parcels.wrap(tweet));
-                    setResult(RESULT_OK, intent);
+                    // update RV with this new tweet
+                    tweets.add(0, tweet);
+
+                    // update view after
+                    adapter.notifyItemInserted(0);
+                    rvTweets.smoothScrollToPosition(0);
+
                     finish();
                 } catch (JSONException e) {
                     Toast.makeText(TimelineActivity.this, "Opening new activity failed!", Toast.LENGTH_LONG).show();
