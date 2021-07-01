@@ -154,6 +154,7 @@ public class TimelineActivity extends AppCompatActivity implements EditFragmentD
 
             // update view after
             adapter.notifyItemInserted(0);
+
             rvTweets.smoothScrollToPosition(0);
         }
         super.onActivityResult(requestCode, resultCode, data);
