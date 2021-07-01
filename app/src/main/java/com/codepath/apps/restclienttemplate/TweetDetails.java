@@ -46,13 +46,8 @@ public class TweetDetails extends AppCompatActivity {
         // init content view
         setContentView(R.layout.activity_tweet_details);
 
-        // init XML elements to vars
-        tvScreenName = (TextView) findViewById(R.id.tvScreenName);
-        tvBody = (TextView) findViewById(R.id.tvBody);
-        tvRelativeTime = (TextView) findViewById(R.id.tvRelativeTime);
-        ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
-        ivOuterLayout = findViewById(R.id.ivOuterLayout);
-        ivMedia = (ImageView) findViewById(R.id.ivMedia);
+        // connect variables to xml elements
+        setViewElements();
 
         // get tweet from intent
         tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
@@ -112,4 +107,15 @@ public class TweetDetails extends AppCompatActivity {
 
         return relativeDate;
     }
+
+    public void setViewElements(){
+        // init XML elements to vars
+        tvScreenName = (TextView) findViewById(R.id.tvScreenName);
+        tvBody = (TextView) findViewById(R.id.tvBody);
+        tvRelativeTime = (TextView) findViewById(R.id.tvRelativeTime);
+        ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+        ivOuterLayout = findViewById(R.id.ivOuterLayout);
+        ivMedia = (ImageView) findViewById(R.id.ivMedia);
+    }
+
 }

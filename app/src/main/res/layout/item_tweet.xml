@@ -34,6 +34,16 @@
         android:text="This is a tweet"
         />
 
+    <TextView
+        android:id="@+id/tvRelativeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@+id/tvScreenName"
+        android:gravity="right"
+        android:text="Right Now" />
+
     <LinearLayout
         android:id="@+id/ivOuterLayout"
         android:layout_width="match_parent"
@@ -54,15 +64,5 @@
             tools:srcCompat="@tools:sample/avatars" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvRelativeTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity = "right"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
-        android:layout_toEndOf="@+id/tvScreenName"
-        android:text="Right Now" />
 
 </RelativeLayout>

@@ -92,12 +92,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         // attach all of the variables to respective XML elements
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
-            tvBody = itemView.findViewById(R.id.tvBody);
-            tvScreenName = itemView.findViewById(R.id.tvScreenName);
-            tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
-            ivOuterLayout = itemView.findViewById(R.id.ivOuterLayout);
-            ivMedia = itemView.findViewById(R.id.ivMedia);
+
+            // connect variables to XML elems
+            setViewElements(itemView);
 
             // add this as the itemView's OnClickListener
             itemView.setOnClickListener(this);
@@ -146,6 +143,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 ivOuterLayout.setVisibility(View.VISIBLE);
                 Glide.with(context).load(mediaUrl).into(ivMedia);
             }
+        }
+        public void setViewElements(@NonNull View itemView) {
+            ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
+            tvBody = itemView.findViewById(R.id.tvBody);
+            tvScreenName = itemView.findViewById(R.id.tvScreenName);
+            tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
+            ivOuterLayout = itemView.findViewById(R.id.ivOuterLayout);
+            ivMedia = itemView.findViewById(R.id.ivMedia);
         }
 
         // method to adjust time text to show time ago
